@@ -1,40 +1,42 @@
+// 🎨 COLORS
 export const colors = {
-  // Background colors
-  background: "#0D0D0D",
-  surface: "#1A1A2E",
-  surfaceLight: "#252540",
+  // Background
+  background: "#76093d", // đen xanh sâu
+  surface: "#46e905", // slate đậm
+  surfaceLight: "#12e98c", // card nổi rõ
 
-  // Primary colors
-  primary: "#00D4FF",
-  primaryDark: "#00A3CC",
+  // Primary (xanh neon)
+  primary: "#0bfaa6",
+  primaryDark: "#0ee9da",
 
-  // Accent colors
-  accent: "#E50914",
-  accentLight: "#FF1A1A",
+  // Accent (đỏ movie / Netflix)
+  accent: "#F43F5E",
+  accentLight: "#c1fb71",
 
-  // Text colors
-  textPrimary: "#FFFFFF",
-  textSecondary: "#8B8B8B",
-  textMuted: "#5A5A5A",
+  // Text
+  textPrimary: "#F9FAFB",
+  textSecondary: "#CBD5E1",
+  textMuted: "#94A3B8",
 
-  // IMDb colors
-  imdbYellow: "#F5C518",
+  // IMDb
+  imdbYellow: "#FACC15",
   imdbBlack: "#000000",
 
-  // Utility colors
-  success: "#00C853",
-  warning: "#FFB300",
-  error: "#FF5252",
+  // Utility
+  success: "#22C55E",
+  warning: "#FBBF24",
+  error: "#EF4444",
 
-  // Overlay colors
-  overlay: "rgba(0, 0, 0, 0.6)",
-  cardOverlay: "rgba(255, 255, 255, 0.1)",
+  // Overlay
+  overlay: "rgba(0,0,0,0.7)",
+  cardOverlay: "rgba(255,255,255,0.12)",
 
-  // Border colors
-  border: "rgba(255, 255, 255, 0.1)",
-  borderLight: "rgba(255, 255, 255, 0.2)",
+  // Border
+  border: "rgba(255,255,255,0.12)",
+  borderLight: "rgba(255,255,255,0.2)",
 };
 
+// 📏 SPACING
 export const spacing = {
   xs: 4,
   sm: 8,
@@ -43,28 +45,32 @@ export const spacing = {
   xl: 20,
   xxl: 24,
   xxxl: 32,
+  huge: 40,
 };
 
+// 🟦 BORDER RADIUS
 export const borderRadius = {
-  sm: 4,
-  md: 8,
-  lg: 12,
-  xl: 16,
-  xxl: 20,
+  sm: 6,
+  md: 10,
+  lg: 14,
+  xl: 18,
+  xxl: 24,
   full: 9999,
 };
 
+// 🔤 FONT SIZE
 export const fontSize = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
-  xl: 18,
-  xxl: 22,
-  xxxl: 28,
-  hero: 36,
+  xs: 11,
+  sm: 13,
+  md: 15,
+  lg: 17,
+  xl: 20,
+  xxl: 24,
+  xxxl: 30,
+  hero: 40,
 };
 
+// 🔠 FONT WEIGHT
 export const fontWeight = {
   regular: "400" as const,
   medium: "500" as const,
@@ -73,26 +79,27 @@ export const fontWeight = {
   extrabold: "800" as const,
 };
 
+// 🌫 SHADOWS (nổi card rõ hơn)
 export const shadows = {
   sm: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.35,
+    shadowRadius: 4,
+    elevation: 3,
   },
   md: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 6,
   },
   lg: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.5,
+    shadowRadius: 14,
+    elevation: 10,
   },
 };

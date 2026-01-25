@@ -6,6 +6,7 @@ import {
   FlatList,
   RefreshControl,
   Pressable,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -67,7 +68,33 @@ export const MyListScreen: React.FC = () => {
       console.error("Error removing favorite:", err);
     }
   };
-
+  const confirmRemove = (movieId: number, title?: string) => {
+    Alert.alert(
+      "Remove movie",
+      title
+        ? `Are you sure you want to remove "${title}" from your list?`
+        : "Are you sure you want to remove this movie from your list?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Remove",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await removeFavorite(movieId);
+              setFavorites((prev) => prev.filter((m) => m.id !== movieId));
+            } catch (err) {
+              console.error("Error removing favorite:", err);
+            }
+          },
+        },
+      ],
+      { cancelable: true },
+    );
+  };
   const renderMovieItem = ({ item }: { item: Movie }) => (
     <View style={styles.movieItemContainer}>
       <MovieCard
@@ -78,7 +105,7 @@ export const MyListScreen: React.FC = () => {
       />
       <Pressable
         style={styles.removeButton}
-        onPress={() => handleRemove(item.id)}
+        onPress={() => confirmRemove(item.id)}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
         <Trash2 size={18} color={colors.error} />
