@@ -2,7 +2,7 @@
 export const colors = {
   // Background
   background: "#76093d", // đen xanh sâu
-  surface: "#46e905", // slate đậm
+  surface: "#532424", // slate đậm
   surfaceLight: "#12e98c", // card nổi rõ
 
   // Primary (xanh neon)

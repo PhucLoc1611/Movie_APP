@@ -26,13 +26,25 @@ import type { Movie, RootStackParamList } from "../types/movie";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+/* =======================
+   Popup Types
+======================= */
+type ConfirmRemoveParams = {
+  movie: Movie;
+  onConfirm: (movieId: number) => void;
+};
+
 export const MyListScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
-  const [favorites, setFavorites] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
 
-  const loadFavorites = useCallback(async () => {
+  const [favorites, setFavorites] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  /* =======================
+     Data
+  ======================= */
+  const loadFavorites = useCallback(async (): Promise<void> => {
     try {
       const data = await getFavorites();
       setFavorites(data);
@@ -44,23 +56,25 @@ export const MyListScreen: React.FC = () => {
     }
   }, []);
 
-  // Reload favorites when screen comes into focus
   useFocusEffect(
     useCallback(() => {
       loadFavorites();
     }, [loadFavorites]),
   );
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback((): void => {
     setRefreshing(true);
     loadFavorites();
   }, [loadFavorites]);
 
-  const handleMoviePress = (movie: Movie) => {
+  /* =======================
+     Actions
+  ======================= */
+  const handleMoviePress = (movie: Movie): void => {
     navigation.navigate("MovieDetail", { movieId: movie.id });
   };
 
-  const handleRemove = async (movieId: number) => {
+  const handleRemove = async (movieId: number): Promise<void> => {
     try {
       await removeFavorite(movieId);
       setFavorites((prev) => prev.filter((m) => m.id !== movieId));
@@ -68,45 +82,46 @@ export const MyListScreen: React.FC = () => {
       console.error("Error removing favorite:", err);
     }
   };
-  const confirmRemove = (movieId: number, title?: string) => {
+
+  /* =======================
+     Typed Popup
+  ======================= */
+  const confirmRemove = ({ movie, onConfirm }: ConfirmRemoveParams): void => {
     Alert.alert(
-      "Remove movie",
-      title
-        ? `Are you sure you want to remove "${title}" from your list?`
-        : "Are you sure you want to remove this movie from your list?",
+      "Remove from My List",
+      `Are you sure you want to remove "${movie.title}" from your list?`,
       [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
+        { text: "Cancel", style: "cancel" },
         {
           text: "Remove",
           style: "destructive",
-          onPress: async () => {
-            try {
-              await removeFavorite(movieId);
-              setFavorites((prev) => prev.filter((m) => m.id !== movieId));
-            } catch (err) {
-              console.error("Error removing favorite:", err);
-            }
-          },
+          onPress: () => onConfirm(movie.id),
         },
       ],
       { cancelable: true },
     );
   };
+
+  /* =======================
+     Render
+  ======================= */
   const renderMovieItem = ({ item }: { item: Movie }) => (
     <View style={styles.movieItemContainer}>
       <MovieCard
         movie={item}
         variant="vertical"
         onPress={handleMoviePress}
-        showRating={true}
+        showRating
       />
       <Pressable
         style={styles.removeButton}
-        onPress={() => confirmRemove(item.id)}
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        onPress={() =>
+          confirmRemove({
+            movie: item,
+            onConfirm: handleRemove,
+          })
+        }
+        hitSlop={10}
       >
         <Trash2 size={18} color={colors.error} />
       </Pressable>
@@ -162,6 +177,9 @@ export const MyListScreen: React.FC = () => {
   );
 };
 
+/* =======================
+   Styles
+======================= */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
